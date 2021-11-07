@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31825.309
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTubeLiveMessageParser", "YouTubeLiveMessageParser\YouTubeLiveMessageParser.csproj", "{6BEA2F61-900B-4192-9055-72A74624931C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTubeLiveMessageParserIF", "YouTubeLiveMessageParserIF\YouTubeLiveMessageParserIF.csproj", "{82CC947A-AFB4-491D-89EE-EFFA994332DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YouTubeLiveMessageParserTests", "YouTubeLiveSitePluginTests\YouTubeLiveMessageParserTests.csproj", "{25856877-18AF-4E6A-89A0-77B0D17B6E5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BEA2F61-900B-4192-9055-72A74624931C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BEA2F61-900B-4192-9055-72A74624931C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BEA2F61-900B-4192-9055-72A74624931C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BEA2F61-900B-4192-9055-72A74624931C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82CC947A-AFB4-491D-89EE-EFFA994332DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82CC947A-AFB4-491D-89EE-EFFA994332DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82CC947A-AFB4-491D-89EE-EFFA994332DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82CC947A-AFB4-491D-89EE-EFFA994332DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25856877-18AF-4E6A-89A0-77B0D17B6E5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25856877-18AF-4E6A-89A0-77B0D17B6E5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25856877-18AF-4E6A-89A0-77B0D17B6E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25856877-18AF-4E6A-89A0-77B0D17B6E5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2D685E9-1D01-4610-9906-A558675ADCAC}
+	EndGlobalSection
+EndGlobal
