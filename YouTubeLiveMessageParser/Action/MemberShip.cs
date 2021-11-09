@@ -38,7 +38,11 @@ namespace ryu_s.YouTubeLive.Message.Action
                 headerPrimaryTextItems = new List<IMessagePart>();
             }
             List<IMessagePart> headerSubTextItems;
-            if (renderer.ContainsKey("headerSubtext"))
+            if (renderer.ContainsKey("headerSubtext") && renderer.headerSubtext.ContainsKey("simpleText"))
+            {
+                headerSubTextItems = new List<IMessagePart> { new TextPart(SimpleTextToString(renderer.headerSubtext)) };
+            }
+            else if (renderer.ContainsKey("headerSubtext") && renderer.headerSubtext.ContainsKey("runs"))
             {
                 headerSubTextItems = RunsToString(renderer.headerSubtext);
             }

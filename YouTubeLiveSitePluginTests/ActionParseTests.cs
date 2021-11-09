@@ -96,7 +96,7 @@ namespace YouTubeLiveSitePluginTests
                 new TextPart(" か月"),
             }, member.HeaderPrimaryTextItems);
             Assert.AreEqual(new List<IMessagePart>(), member.HeaderSubTextItems);
-            Assert.AreEqual(new List<IMessagePart> {new TextPart("シオンちゃんおかえり！大好き！") }, member.MessageItems);
+            Assert.AreEqual(new List<IMessagePart> { new TextPart("シオンちゃんおかえり！大好き！") }, member.MessageItems);
         }
         [Test]
         public void ParseNormalMembershipTest()
@@ -119,6 +119,33 @@ namespace YouTubeLiveSitePluginTests
                 new TextPart(" へようこそ！"),
             }, member.HeaderSubTextItems);
             Assert.AreEqual(new List<IMessagePart>(), member.MessageItems);
+        }
+
+        [Test]
+        public void MemberMilestoneChatTest()
+        {
+            var raw = "{ \"clickTrackingParams\": \"CAEQl98BIhMIxum6pZ-L9AIVpeE4Bh3DeQ-3\", \"addChatItemAction\": { \"item\": { \"liveChatMembershipItemRenderer\": { \"id\": \"Ci8KLUNLQ0MxX0xBaF9RQ0ZTOEZoQW9kb0JFQTVBLUxveU1lc0lELTMyNzI5MTkzMQ%3D%3D\", \"timestampUsec\": \"1636459655369057\", \"authorExternalChannelId\": \"UC_mV25pZDNAyev6B4nGAfqQ\", \"headerPrimaryText\": { \"runs\": [ { \"text\": \"メンバー歴 \" }, { \"text\": \"3\" }, { \"text\": \" か月\" } ] }, \"headerSubtext\": { \"simpleText\": \"うどん\" }, \"message\": { \"runs\": [ { \"text\": \"8\" } ] }, \"authorName\": { \"simpleText\": \"Fong\" }, \"authorPhoto\": { \"thumbnails\": [ { \"url\": \"https://yt4.ggpht.com/ytc/AKedOLQxO0uZRUPj0EmkpL73enICkZLwRxcVDq6dyMO39w=s32-c-k-c0x00ffffff-no-rj\", \"width\": 32, \"height\": 32 }, { \"url\": \"https://yt4.ggpht.com/ytc/AKedOLQxO0uZRUPj0EmkpL73enICkZLwRxcVDq6dyMO39w=s64-c-k-c0x00ffffff-no-rj\", \"width\": 64, \"height\": 64 } ] }, \"authorBadges\": [ { \"liveChatAuthorBadgeRenderer\": { \"customThumbnail\": { \"thumbnails\": [ { \"url\": \"https://yt3.ggpht.com/mG7DlQTEhdQ_KxMSe_S6VsXJ5n4vtb4FkQJAF8KqI5wiCcf1YPcokVbaJpy74sKv58hOlGEcwN8=s16-c-k\" }, { \"url\": \"https://yt3.ggpht.com/mG7DlQTEhdQ_KxMSe_S6VsXJ5n4vtb4FkQJAF8KqI5wiCcf1YPcokVbaJpy74sKv58hOlGEcwN8=s32-c-k\" } ] }, \"tooltip\": \"メンバー（2 か月）\", \"accessibility\": { \"accessibilityData\": { \"label\": \"メンバー（2 か月）\" } } } } ], \"contextMenuEndpoint\": { \"clickTrackingParams\": \"CAUQ4f0GIhMIxum6pZ-L9AIVpeE4Bh3DeQ-3\", \"commandMetadata\": { \"webCommandMetadata\": { \"ignoreNavigation\": true } }, \"liveChatItemContextMenuEndpoint\": { \"params\": \"Q2pFS0x3b3RRMHREUXpGZlRFRm9YMUZEUmxNNFJtaEJiMlJ2UWtWQk5VRXRURzk1VFdWelNVUXRNekkzTWpreE9UTXhHaWtxSndvWVZVTlJNRlZFVEZGRGFsa3djbTExZUVORVJUTTRSa2RuRWd0blpIbHhNRlExVGtST1FTQUNLQUV5R2dvWVZVTmZiVll5TlhCYVJFNUJlV1YyTmtJMGJrZEJabkZS\" } }, \"contextMenuAccessibility\": { \"accessibilityData\": { \"label\": \"コメントの操作\" } }, \"trackingParams\": \"CAUQ4f0GIhMIxum6pZ-L9AIVpeE4Bh3DeQ-3\" } } } }";
+            var a = ActionFactory.Parse(raw);
+            if (a is not MemberShip member)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual("UC_mV25pZDNAyev6B4nGAfqQ", member.AuthorExternalChannelId);
+            Assert.AreEqual("Fong", member.AuthorName);
+            Assert.AreEqual("Ci8KLUNLQ0MxX0xBaF9RQ0ZTOEZoQW9kb0JFQTVBLUxveU1lc0lELTMyNzI5MTkzMQ%3D%3D", member.Id);
+            Assert.AreEqual(1636459655369057, member.TimestampUsec);
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("メンバー歴 "),
+                new TextPart("3"),
+                new TextPart(" か月"),
+            }, member.HeaderPrimaryTextItems);
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("うどん"),
+            }, member.HeaderSubTextItems);
+            Assert.AreEqual(new List<IMessagePart> {new TextPart("8") }, member.MessageItems);
         }
     }
 }
