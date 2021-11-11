@@ -15,7 +15,7 @@ namespace ryu_s.YouTubeLive.Message.Action
             if (obj == null) return new ParseError(json);
             return Parse(obj);
         }
-        public static IAction Parse(dynamic json)
+        internal static IAction Parse(dynamic json)
         {
             if (json.ContainsKey("addChatItemAction"))
             {
@@ -42,6 +42,14 @@ namespace ryu_s.YouTubeLive.Message.Action
                 else if (json.addChatItemAction.item.ContainsKey("liveChatPlaceholderItemRenderer"))
                 {
                     return Placeholder.Parse(json.addChatItemAction);
+                }
+                else if (json.addChatItemAction.item.ContainsKey("liveChatModeChangeMessageRenderer"))
+                {
+                    return ModeChangeMessage.Parse(json.addChatItemAction);
+                }
+                else if (json.addChatItemAction.item.ContainsKey("liveChatAutoModMessageRenderer"))
+                {
+                    return LiveChatAutoModMessage.Parse(json.addChatItemAction);
                 }
                 else
                 {
@@ -79,6 +87,10 @@ namespace ryu_s.YouTubeLive.Message.Action
             else if (json.ContainsKey("showLiveChatTooltipCommand"))
             {
                 return IgnoredMessage.Parse(json.showLiveChatTooltipCommand);
+            }
+            else if (json.ContainsKey("removeBannerForLiveChatCommand"))
+            {
+                return IgnoredMessage.Parse(json.removeBannerForLiveChatCommand);
             }
             else if (json.ContainsKey("markChatItemsByAuthorAsDeletedAction"))
             {

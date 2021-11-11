@@ -147,5 +147,45 @@ namespace YouTubeLiveSitePluginTests
             }, member.HeaderSubTextItems);
             Assert.AreEqual(new List<IMessagePart> {new TextPart("8") }, member.MessageItems);
         }
+        [Test]
+        public void ParseRemoveBannerForLiveChatCommandTest()
+        {
+            var raw = "{\"removeBannerForLiveChatCommand\":{\"targetActionId\":\"ChwKGkNQR0lyOWpTamZRQ0ZXb0dyUVlkX0U4R3dB\"}}";
+            var a = ActionFactory.Parse(raw);
+            if (a is not IgnoredMessage ignored)
+            {
+                Assert.Fail();
+                return;
+            }
+        }
+        [Test]
+        public void ParseModeChangeMessageTest()
+        {
+            var raw = "{\"addChatItemAction\":{\"item\":{\"liveChatModeChangeMessageRenderer\":{\"id\":\"ChwKGkNKZWd5dUd2amZRQ0ZUVWI1d29kZmdNTFJn\",\"timestampUsec\":\"1636532799875477\",\"icon\":{\"iconType\":\"SLOW_MODE\"},\"text\":{\"runs\":[{\"text\":\"低速モードが有効です\",\"bold\":true}]},\"subtext\":{\"runs\":[{\"text\":\"10秒\",\"italics\":true},{\"text\":\"ごとにメッセージを送信します\",\"italics\":true}]}}}}}";
+            var a = ActionFactory.Parse(raw);
+            if (a is not ModeChangeMessage modeChange)
+            {
+                Assert.Fail();
+                return;
+            }
+        }
+        [Test]
+        public void ParseLiveChatAutoModMessageTest()
+        {
+            var raw = "{\"addChatItemAction\":{\"item\":{\"liveChatAutoModMessageRenderer\":{\"id\":\"CjoKGkNLcUM3c0hwamZRQkZmdNTFJnEhxDSTZPN3Vfb2pmUUNGUXMxandvZHViQUgtQS0z\",\"timestampUsec\":\"1636548302569808\",\"autoModeratedItem\":{\"liveChatTextMessageRenderer\":{\"message\":{\"runs\":[{\"text\":\"やっぱりこの人。。。馬鹿だ。\"}]},\"authorName\":{\"simpleText\":\"y h\"},\"authorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/ytc/AKedOLTrEop9FvheO48wNB2vq3rzlVk_RZEslN-zLg=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/ytc/AKedOLTrEop9FvheO48wNB2vq3rzlVk_RZEslN-zLg=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"contextMenuEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"liveChatItemContextMenuEndpoint\":{\"params\":\"Q2p3S09nb2FRMHR4UXpkelNIQnFabEZEUmxSVllqVjNiMlJtWjAxTVVtY1NIRU5KTms4M2RWOXZhbVpSUTBaUmN6RnFkMjlrZFdKQlNDMUJMVE1hSMyZFZhV3hZVVRGbFZFd3dJQUlvQVRJYUNoaFZRM1JEYmxCWk5uTlVXVVpPUVhwSVRVVlNOMlJzWW5jJTNE\"}},\"id\":\"CjoKGkNLcUM3c0hwamZRQkZmdNTFJnEhxDSTZPN3Vfb2pmUUNGUXMxandvZHViQUgtQS0z\",\"timestampUsec\":\"1636548302569808\",\"authorExternalChannelId\":\"UCtCnPY6sTYFNAzHMER7dlbw\",\"contextMenuAccessibility\":{\"accessibilityData\":{\"label\":\"コメントの操作\"}}}},\"headerText\":{\"runs\":[{\"text\":\"このメッセージは確認待ちです。\"}]},\"infoDialogButton\":{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"icon\":{\"iconType\":\"WARNING\"},\"navigationEndpoint\":{\"liveChatDialogEndpoint\":{\"content\":{\"liveChatDialogRenderer\":{\"title\":{\"runs\":[{\"text\":\"適切でない可能性があるメッセージは確認待ちとなります\"}]},\"dialogMessages\":[{\"runs\":[{\"text\":\"確認待ちのチャット メッセージは自分には表示されますが、公開されません。公開するには [表示]、非表示のままにするには [非表示] を選択してください。\"}]},{\"runs\":[{\"text\":\"この機能は\"},{\"text\":\"設定\",\"navigationEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"url\":\"https://studio.youtube.com/channel/UC?d=sd&sds=community\",\"webPageType\":\"WEB_PAGE_TYPE_UNKNOWN\",\"rootVe\":83769}},\"urlEndpoint\":{\"url\":\"https://studio.youtube.com/channel/UC?d=sd&sds=community\",\"target\":\"TARGET_NEW_WINDOW\"}}},{\"text\":\"で無効にできます。\"}]}],\"confirmButton\":{\"buttonRenderer\":{\"style\":\"STYLE_BLUE_TEXT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"text\":{\"simpleText\":\"OK\"},\"accessibility\":{\"label\":\"OK\"}}}}}}},\"accessibility\":{\"label\":\"詳細\"},\"tooltip\":\"詳細\",\"accessibilityData\":{\"accessibilityData\":{\"label\":\"詳細\"}}}},\"moderationButtons\":[{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"text\":{\"simpleText\":\"表示\"},\"serviceEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/live_chat/moderate\"}},\"moderateLiveChatEndpoint\":{\"params\":\"Q2lrcUp3b1lWVU52VDNOWlQwbFBXWGhLU0VaQk9HaE9ZbE5UWW5KQkVndG5WV2xzV0ZFeFpWUk1NRUktQ2p3S09nb2FRMHR4UXpkelNIQnFabEZEUmxSVllqVjNiMlJtWjAxTVVtY1NIRU5KTms4M2RWOXZhbVpSUTBaUmN6RnFkMjlrZFdKQlNDMUJMVE5RQWxnQw==\"}},\"accessibility\":{\"label\":\"表示\"}}},{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"text\":{\"simpleText\":\"非表示\"},\"serviceEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/live_chat/moderate\"}},\"moderateLiveChatEndpoint\":{\"params\":\"Q2lrcUp3b1lWVU52VDNOWlQwbFBXWGhLU0VaQk9HaE9ZbE5UWW5KQkVndG5WV2xzV0ZFeFpWUk1NRW8tQ2p3S09nb2FRMHR4UXpkelNIQnFabEZEUmxSVllqVjNiMlJtWjAxTVVtY1NIRU5KTms4M2RWOXZhbVpSUTBaUmN6RnFkMjlrZFdKQlNDMUJMVE5RQWxnQw==\"}},\"accessibility\":{\"label\":\"非表示\"}}}],\"authorExternalChannelId\":\"UCtCnPY6sTYFNBzHMER7dlbk\",\"inlineActionButtons\":[{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"serviceEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/live_chat/moderate\"}},\"moderateLiveChatEndpoint\":{\"params\":\"Q2lrcUp3b1lWVU52VDNOWlQwbFBXWGhLU0VaQk9HaE9ZbE5UWW5KQkVndG5WV2xzV0ZFeFpWUk1NQkktQ2p3S09nb2FRMHR4UXpkelNIQnFabEZEUmxSVllqVjNiMlJtWjAxTVVtY1NIRU5KTms4M2RWOXZhbVpSUTBaUmN6RnFkMjlrZFdKQlNDMUJMVE5RQWxnRA==\"}},\"icon\":{\"iconType\":\"DELETE\"},\"accessibility\":{\"label\":\"削除\"},\"tooltip\":\"削除\",\"accessibilityData\":{\"accessibilityData\":{\"label\":\"削除\"}}}},{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"serviceEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/live_chat/moderate\"}},\"moderateLiveChatEndpoint\":{\"params\":\"Q2lrcUp3b1lWVU52VDNOWlQwbFBXWGhLU0VaQk9HaE9ZbE5UWW5KQkVndG5WV2xzV0ZFeFpWUk1NRElZQ2haMFEyNVFXVFp6VkZsR1RrRjZTRTFGVWpka2JHSjNVQUpZQXclM0QlM0Q=\"}},\"icon\":{\"iconType\":\"HOURGLASS\"},\"accessibility\":{\"label\":\"ユーザーをタイムアウトにする\"},\"tooltip\":\"ユーザーをタイムアウトにする\",\"accessibilityData\":{\"accessibilityData\":{\"label\":\"ユーザーをタイムアウトにする\"}}}},{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"serviceEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/live_chat/moderate\"}},\"moderateLiveChatEndpoint\":{\"params\":\"Q2lrcUp3b1lWVU52VDNOWlQwbFBXWGhLU0VaQk9HaE9ZbE5UWW5KQkVndG5WV2xzV0ZFeFpWUk1NQ0lZQ2haMFEyNVFXVFp6VkZsR1RrRjZTRTFGVWpka2JHSjNVQUpZQXclM0QlM0Q=\"}},\"icon\":{\"iconType\":\"REMOVE_CIRCLE\"},\"accessibility\":{\"label\":\"このチャンネルのユーザーを表示しない\"},\"tooltip\":\"このチャンネルのユーザーを表示しない\",\"accessibilityData\":{\"accessibilityData\":{\"label\":\"このチャンネルのユーザーを表示しない\"}}}}],\"additionalInlineActionButtons\":[{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"serviceEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/live_chat/moderate\"}},\"moderateLiveChatEndpoint\":{\"params\":\"Q2lrcUp3b1lWVU52VDNOWlQwbFBXWGhLU0VaQk9HaE9ZbE5UWW5KQkVndG5WV2xzV0ZFeFpWUk1NRUktQ2p3S09nb2FRMHR4UXpkelNIQnFabEZEUmxSVllqVjNiMlJtWjAxTVVtY1NIRU5KTms4M2RWOXZhbVpSUTBaUmN6RnFkMjlrZFdKQlNDMUJMVE5RQWxnRA==\"}},\"icon\":{\"iconType\":\"VISIBILITY\"},\"accessibility\":{\"label\":\"表示\"},\"tooltip\":\"表示\",\"accessibilityData\":{\"accessibilityData\":{\"label\":\"表示\"}}}},{\"buttonRenderer\":{\"style\":\"STYLE_DEFAULT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"serviceEndpoint\":{\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/live_chat/moderate\"}},\"moderateLiveChatEndpoint\":{\"params\":\"Q2lrcUp3b1lWVU52VDNOWlQwbFBXWGhLU0VaQk9HaE9ZbE5UWW5KQkVndG5WV2xzV0ZFeFpWUk1NRW8tQ2p3S09nb2FRMHR4UXpkelNIQnFabEZEUmxSVllqVjNiMlJtWjAxTVVtY1NIRU5KTms4M2RWOXZhbVpSUTBaUmN6RnFkMjlrZFdKQlNDMUJMVE5RQWxnRA==\"}},\"icon\":{\"iconType\":\"VISIBILITY_OFF\"},\"accessibility\":{\"label\":\"非表示\"},\"tooltip\":\"非表示\",\"accessibilityData\":{\"accessibilityData\":{\"label\":\"非表示\"}}}}]}},\"clientId\":\"CI6O7u_ojfQCFQs1jwodubAH-A-3\"}}";
+            var a = ActionFactory.Parse(raw);
+            if (a is not LiveChatAutoModMessage autoMod)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual("y h", autoMod.AutoModeratedItemAuthorName);
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("やっぱりこの人。。。馬鹿だ。"),
+            }, autoMod.AutoModeratedItemMessage);
+            Assert.AreEqual("CjoKGkNLcUM3c0hwamZRQkZmdNTFJnEhxDSTZPN3Vfb2pmUUNGUXMxandvZHViQUgtQS0z", autoMod.Id);
+            Assert.AreEqual("1636548302569808", autoMod.TimestampUsec);
+        }
     }
 }

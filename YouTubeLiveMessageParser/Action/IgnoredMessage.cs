@@ -5,7 +5,7 @@ namespace ryu_s.YouTubeLive.Message.Action
     /// <summary>
     /// 使い道が無さそうなやつ
     /// </summary>
-    class IgnoredMessage : IAction
+    public class IgnoredMessage : IAction
     {
         public IgnoredMessage(string raw)
         {
