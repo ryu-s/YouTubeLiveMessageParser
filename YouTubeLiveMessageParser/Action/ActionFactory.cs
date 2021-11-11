@@ -51,9 +51,13 @@ namespace ryu_s.YouTubeLive.Message.Action
                 {
                     return LiveChatAutoModMessage.Parse(json.addChatItemAction);
                 }
+                else if (json.addChatItemAction.item.ContainsKey("liveChatModerationMessageRenderer"))
+                {
+                    return LiveChatModerationMessage.Parse(json.addChatItemAction);
+                }
                 else
                 {
-
+                    return new ParseError(json.ToString());
                 }
             }
             else if (json.ContainsKey("addBannerToLiveChatCommand"))
@@ -80,7 +84,7 @@ namespace ryu_s.YouTubeLive.Message.Action
                 }
                 else
                 {
-
+                    return new ParseError(json.ToString());
                 }
 
             }
@@ -96,18 +100,26 @@ namespace ryu_s.YouTubeLive.Message.Action
             {
                 return DeletedByAuthor.Parse(json.markChatItemsByAuthorAsDeletedAction);
             }
+            else if (json.ContainsKey("updateLiveChatPollAction"))
+            {
+                return UpdateLiveChatPollAction.Parse(json.updateLiveChatPollAction);
+            }
+            else if (json.ContainsKey("showLiveChatDialogAction"))
+            {
+                return IgnoredMessage.Parse(json.showLiveChatDialogAction);
+            }
+            else if (json.ContainsKey("closeLiveChatActionPanelAction"))
+            {
+                return IgnoredMessage.Parse(json.closeLiveChatActionPanelAction);
+            }
+            else if (json.ContainsKey("commandMetadata"))
+            {
+                return IgnoredMessage.Parse(json.commandMetadata);
+            }
             else
             {
-
+                return new ParseError(json.ToString());
             }
-            return new ParseError(json.ToString());
-        }
-    }
-    class DeletedMessage : IAction
-    {
-        public static DeletedMessage Parse(dynamic json)
-        {
-            return new DeletedMessage();
         }
     }
 }
