@@ -5,8 +5,12 @@ namespace ryu_s.YouTubeLive.Message
 {
     public class YtCfg
     {
-        public string DelegatedSessionId { get; }
-        public string IdToken { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>コメント投稿時に必要</remarks>
+        public string? DelegatedSessionId { get; }
+        public string? IdToken { get; }
         public string InnertubeApiKey { get; }
         public string InnertubeContext { get; }
         public string XsrfToken { get; }
@@ -18,8 +22,8 @@ namespace ryu_s.YouTubeLive.Message
             {
                 throw new ArgumentException();
             }
-            DelegatedSessionId = (string)obj.DELEGATED_SESSION_ID;
-            IdToken =(string)obj.ID_TOKEN;
+            DelegatedSessionId = (string?)obj.DELEGATED_SESSION_ID;
+            IdToken =(string?)obj.ID_TOKEN;
             InnertubeApiKey = (string)obj.INNERTUBE_API_KEY;
             InnertubeContext = (string)obj.INNERTUBE_CONTEXT.ToString(Formatting.None);
             XsrfToken = (string)obj.XSRF_TOKEN;

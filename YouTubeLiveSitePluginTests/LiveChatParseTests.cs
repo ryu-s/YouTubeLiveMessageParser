@@ -37,5 +37,24 @@ namespace YouTubeLiveSitePluginTests
             Assert.AreEqual("0ofMyAOBARpYQ2lrcUp3b1lWVU4xVkVGWVZHVjRjbWhsZEdKUFpUTjZaM05yU2tKUkVnc3dWRmRKU1hOaGMxaFBRUm9UNnFqZHVRRU5DZ3N3VkZkSlNYTmhjMWhQUVNBQzABSh4IABgAIABQnbWT47-C9AJYA3gAogEAqgECEACwAQCCAQIIBA%3D%3D", liveChat.YtInitialData.JouiChatContinuation);
             Assert.AreEqual("0ofMyAOBARpYQ2lrcUp3b1lWVU4xVkVGWVZHVjRjbWhsZEdKUFpUTjZaM05yU2tKUkVnc3dWRmRKU1hOaGMxaFBRUm9UNnFqZHVRRU5DZ3N3VkZkSlNYTmhjMWhQUVNBQzABSh4IABgAIABQnbWT47-C9AJYA3gAogEAqgECEACwAQCCAQIIAQ%3D%3D", liveChat.YtInitialData.AllChatContinuation);
         }
+        /// <summary>
+        /// DelegatedSessionIdとIdTokenが無い場合があった
+        /// </summary>
+        [Test]
+        public void ParseLiveChatTest3()
+        {
+            var s = Tools.GetSampleData("LiveChat3.txt");
+            var liveChat = LiveChat.Parse(s);
+            Assert.IsNull(liveChat.YtCfg.DelegatedSessionId);
+            Assert.IsNull( liveChat.YtCfg.IdToken);
+            Assert.AreEqual("AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8", liveChat.YtCfg.InnertubeApiKey);
+            Assert.IsTrue(liveChat.YtCfg.InnertubeContext.StartsWith("{"));
+            Assert.IsTrue( liveChat.YtCfg.XsrfToken.StartsWith("QUFF"));
+            Assert.IsFalse(liveChat.YtCfg.IsLoggedIn);
+            Assert.IsNull(liveChat.YtInitialData.MessageSendButtonServiceEndpoint);
+            Assert.IsNull(liveChat.YtInitialData.MessageSendButtonServiceEndpointClientIdPrefix);
+            Assert.AreEqual("0ofMyAODARpYQ2lrcUp3b1lWVU5zWDJkRGVXSlBTbEpKWjA5WWR6WlJZalJ4U25wUkVndFpabVZ2TXpoU2JHNURheG9UNnFqZHVRRU5DZ3RaWm1Wdk16aFNiRzVEYXlBQzABSiAIABgAIABQ2Kfw0I-p9AJYA3gAogEAqgEEEAAaALABAIIBAggE", liveChat.YtInitialData.JouiChatContinuation);
+            Assert.AreEqual("0ofMyAODARpYQ2lrcUp3b1lWVU5zWDJkRGVXSlBTbEpKWjA5WWR6WlJZalJ4U25wUkVndFpabVZ2TXpoU2JHNURheG9UNnFqZHVRRU5DZ3RaWm1Wdk16aFNiRzVEYXlBQzABSiAIABgAIABQ2Kfw0I-p9AJYA3gAogEAqgEEEAAaALABAIIBAggB", liveChat.YtInitialData.AllChatContinuation);
+        }
     }
 }
