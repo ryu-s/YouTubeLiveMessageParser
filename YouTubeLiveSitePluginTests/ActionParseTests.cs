@@ -261,5 +261,64 @@ namespace YouTubeLiveSitePluginTests
                 new TextPart(" さんからメンバーシップ ギフトが贈られました"),
             }, gift.MessageItems);
         }
+        [Test]
+        public void ParsePlaceHolderMessageTest()
+        {
+            var s = "{\"addChatItemAction\":{\"item\":{\"liveChatPlaceholderItemRenderer\":{\"id\":\"id\",\"timestampUsec\":\"1659951544115903\"}},\"clientId\":\"clientid\"}}";
+            var a = ActionFactory.Parse(s);
+            if (a is not Placeholder text)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual("id", text.Id);
+            Assert.AreEqual(1659951544115903, text.TimestampUsec);
+            Assert.AreEqual("clientid", text.ClientId);
+        }
+        [Test]
+        public void ParseTickerSponsorMessageTest()
+        {
+            var s = "{\"addLiveChatTickerItemAction\":{\"item\":{\"liveChatTickerSponsorItemRenderer\":{\"id\":\"id1\",\"detailText\":{\"accessibility\":{\"accessibilityData\":{\"label\":\"18 か月\"}},\"simpleText\":\"18 か月\"},\"detailTextColor\":4294967295,\"startBackgroundColor\":4279213400,\"endBackgroundColor\":4278943811,\"sponsorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu--AlUVLTfYBb7n9zqy-_7iqV-Mcfnnc-L5QxNBzw=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu--AlUVLTfYBb7n9zqy-_7iqV-Mcfnnc-L5QxNBzw=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"durationSec\":92,\"showItemEndpoint\":{\"clickTrackingParams\":\"CEoQ4_0GIhMIiM7glPa2-QIVq0v1BR1ANgOS\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"showLiveChatItemEndpoint\":{\"renderer\":{\"liveChatMembershipItemRenderer\":{\"id\":\"id2\",\"timestampUsec\":\"1659950650880161\",\"authorExternalChannelId\":\"UCgdz0Hw38egQ54AqNCR0-Hg\",\"headerPrimaryText\":{\"runs\":[{\"text\":\"メンバー歴 \"},{\"text\":\"18\"},{\"text\":\" か月\"}]},\"message\":{\"runs\":[{\"text\":\"message\"}]},\"authorName\":{\"simpleText\":\"クロア・アルディート\"},\"authorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu--AlUVLTfYBb7n9zqy-_7iqV-Mcfnnc-L5QxNBzw=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu--AlUVLTfYBb7n9zqy-_7iqV-Mcfnnc-L5QxNBzw=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"authorBadges\":[{\"liveChatAuthorBadgeRenderer\":{\"customThumbnail\":{\"thumbnails\":[{\"url\":\"https://yt3.ggpht.com/IEEe1DOaW5hSbxGUcogiCbBHyc73ahv_ua_w9ZtYybhFxx5PZbM-dng042VVI2-D4HnrtIEClg=s16-c-k\"},{\"url\":\"https://yt3.ggpht.com/IEEe1DOaW5hSbxGUcogiCbBHyc73ahv_ua_w9ZtYybhFxx5PZbM-dng042VVI2-D4HnrtIEClg=s32-c-k\"}]},\"tooltip\":\"メンバー（1 年）\",\"accessibility\":{\"accessibilityData\":{\"label\":\"メンバー（1 年）\"}}}}],\"contextMenuEndpoint\":{\"clickTrackingParams\":\"CEwQ4f0GIhMIiM7glPa2-QIVq0v1BR1ANgOS\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"liveChatItemContextMenuEndpoint\":{\"params\":\"Q2pFS0x3b3RRMHRMYVhKdlUzcHdYMnREUmxwMFEyVm5WV1F4VWpSUWNuY3RURzk1VFdWelNVUXRNek14T1Rrd01UTXdHaWtxSndvWVZVTndMVFYwT1ZOeVQxRjNXRTFWTjJsSmFsRm1RVkpuRWd0d2MySlNTMXB4ZFhCTmN5QUNLQVF5R2dvWVZVTm5aSG93U0hjek9HVm5VVFUwUVhGT1ExSXdMVWhuT0FKSUFGQVg=\"}},\"contextMenuAccessibility\":{\"accessibilityData\":{\"label\":\"チャットの操作\"}},\"trackingParams\":\"CEwQ4f0GIhMIiM7glPa2-QIVq0v1BR1ANgOS\"}},\"trackingParams\":\"CEsQjtEGIhMIiM7glPa2-QIVq0v1BR1ANgOS\"}},\"authorExternalChannelId\":\"UCgdz0Hw38egQ54AqNCR0-Hg\",\"fullDurationSec\":120,\"trackingParams\":\"CEoQ4_0GIhMIiM7glPa2-QIVq0v1BR1ANgOS\"}},\"durationSec\":\"92\"}}";
+            var a = ActionFactory.Parse(s);
+            if (a is not TickerSponser text)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("message"),
+            }, text.MessageItems);
+            Assert.AreEqual("id2", text.Id);
+            Assert.AreEqual(1659950650880161, text.TimestampUsec);
+            Assert.AreEqual("UCgdz0Hw38egQ54AqNCR0-Hg", text.AuthorExternalChannelId);
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("メンバー歴 "),
+                new TextPart("18"),
+                new TextPart(" か月"),
+            }, text.HeaderPrimaryText);
+        }
+        [Test]
+        public void ParseTickerSponsorMessageWithNoMessageTest()
+        {
+            var s = "{\"addLiveChatTickerItemAction\":{\"item\":{\"liveChatTickerSponsorItemRenderer\":{\"id\":\"id1\",\"detailText\":{\"accessibility\":{\"accessibilityData\":{\"label\":\"16 か月\"}},\"simpleText\":\"16 か月\"},\"detailTextColor\":4294967295,\"startBackgroundColor\":4279213400,\"endBackgroundColor\":4278943811,\"sponsorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu-ATs7F6FVEFfDB_xggmMXwdzv3RJ8RQAZH-Q=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu-ATs7F6FVEFfDB_xggmMXwdzv3RJ8RQAZH-Q=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"durationSec\":120,\"showItemEndpoint\":{\"clickTrackingParams\":\"CAIQ4_0GIhMI5-Djm-2N-gIVWLRWAR2emARL\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"showLiveChatItemEndpoint\":{\"renderer\":{\"liveChatMembershipItemRenderer\":{\"id\":\"id2\",\"timestampUsec\":\"1659951544115903\",\"authorExternalChannelId\":\"CHANNELID\",\"headerPrimaryText\":{\"runs\":[{\"text\":\"メンバー歴 \"},{\"text\":\"16\"},{\"text\":\" か月\"}]},\"empty\":true,\"authorName\":{\"simpleText\":\"绍鸿\"},\"authorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu-ATs7F6FVEFfDB_xggmMXwdzv3RJ8RQAZH-Q=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/ytc/AMLnZu-ATs7F6FVEFfDB_xggmMXwdzv3RJ8RQAZH-Q=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"authorBadges\":[{\"liveChatAuthorBadgeRenderer\":{\"customThumbnail\":{\"thumbnails\":[{\"url\":\"https://yt3.ggpht.com/IEEe1DOaW5hSbxGUcogiCbBHyc73ahv_ua_w9ZtYybhFxx5PZbM-dng042VVI2-D4HnrtIEClg=s16-c-k\"},{\"url\":\"https://yt3.ggpht.com/IEEe1DOaW5hSbxGUcogiCbBHyc73ahv_ua_w9ZtYybhFxx5PZbM-dng042VVI2-D4HnrtIEClg=s32-c-k\"}]},\"tooltip\":\"メンバー（1 年）\",\"accessibility\":{\"accessibilityData\":{\"label\":\"メンバー（1 年）\"}}}}],\"contextMenuEndpoint\":{\"clickTrackingParams\":\"CAQQ4f0GIhMI5-Djm-2N-gIVWLRWAR2emARL\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"liveChatItemContextMenuEndpoint\":{\"params\":\"Q2pFS0x3b3RRMHRwYTJwaWJYaGZYMnREUmxSaVZHeEJhMlJXUVZGSFMzY3RURzk1VFdWelNVUXRNek15TlRnM05URXpHaWtxSndvWVZVTndMVFYwT1ZOeVQxRjNXRTFWTjJsSmFsRm1RVkpuRWdzNVZYaHdiR1ZaTm1KM05DQUNLQVF5R2dvWVZVTkZaRkpCUTFvdFUxWnVhbEpTUm1oM1ZtRlZaamQzT0FKSUFGQVg=\"}},\"contextMenuAccessibility\":{\"accessibilityData\":{\"label\":\"チャットの操作\"}},\"trackingParams\":\"CAQQ4f0GIhMI5-Djm-2N-gIVWLRWAR2emARL\"}},\"trackingParams\":\"CAMQjtEGIhMI5-Djm-2N-gIVWLRWAR2emARL\"}},\"authorExternalChannelId\":\"UCEdRACZ-SVnjRRFhwVaUf7w\",\"fullDurationSec\":120,\"trackingParams\":\"CAIQ4_0GIhMI5-Djm-2N-gIVWLRWAR2emARL\"}},\"durationSec\":\"120\"}}";
+            var a = ActionFactory.Parse(s);
+            if (a is not TickerSponser text)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual(new List<IMessagePart> { }, text.MessageItems);
+            Assert.AreEqual("id2", text.Id);
+            Assert.AreEqual(1659951544115903, text.TimestampUsec);
+            Assert.AreEqual("CHANNELID", text.AuthorExternalChannelId);
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("メンバー歴 "),
+                new TextPart("16"),
+                new TextPart(" か月"),
+            }, text.HeaderPrimaryText);
+        }
     }
 }

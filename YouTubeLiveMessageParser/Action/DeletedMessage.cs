@@ -1,6 +1,6 @@
 ﻿namespace ryu_s.YouTubeLive.Message.Action
 {
-    class DeletedMessage : IAction
+    public class DeletedMessage : IAction
     {
         public static DeletedMessage Parse(dynamic json)
         {

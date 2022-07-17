@@ -7,11 +7,19 @@ namespace ryu_s.YouTubeLive.Message.Action
     {
         public static string SimpleTextToString(dynamic obj)
         {
+            if (obj == null)
+            {
+                return string.Empty;
+            }
             return (string)obj.simpleText;
         }
         public static List<IMessagePart> RunsToString(dynamic obj)
         {
             var messageItems = new List<IMessagePart>();
+            if (obj == null)
+            {
+                return messageItems;
+            }
             foreach (var item in obj.runs)
             {
                 if (item.ContainsKey("text"))

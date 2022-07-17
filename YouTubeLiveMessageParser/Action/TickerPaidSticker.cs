@@ -1,6 +1,6 @@
 ﻿namespace ryu_s.YouTubeLive.Message.Action
 {
-    class TickerPaidSticker : IAction
+    public class TickerPaidSticker : IAction
     {
         public static TickerPaidSticker Parse(dynamic json)
         {
