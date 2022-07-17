@@ -55,6 +55,10 @@ namespace ryu_s.YouTubeLive.Message.Action
                 {
                     return LiveChatModerationMessage.Parse(json.addChatItemAction);
                 }
+                else if (json.addChatItemAction.item.ContainsKey("liveChatSponsorshipsGiftRedemptionAnnouncementRenderer"))
+                {
+                    return LiveChatSponsorshipsGiftRedemptionAnnouncementMessage.Parse(json.addChatItemAction);
+                }
                 else
                 {
                     return new ParseError(json.ToString());

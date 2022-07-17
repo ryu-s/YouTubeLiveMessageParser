@@ -145,7 +145,7 @@ namespace YouTubeLiveSitePluginTests
             {
                 new TextPart("うどん"),
             }, member.HeaderSubTextItems);
-            Assert.AreEqual(new List<IMessagePart> {new TextPart("8") }, member.MessageItems);
+            Assert.AreEqual(new List<IMessagePart> { new TextPart("8") }, member.MessageItems);
         }
         [Test]
         public void ParseRemoveBannerForLiveChatCommandTest()
@@ -241,6 +241,25 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
+        }
+        [Test]
+        public void ParseLiveChatSponsorshipsGiftRedemptionAnnouncementMessageTest()
+        {
+            var raw = "{\"clickTrackingParams\":\"CAEQl98BIhMIk5KG66__-AIV-mAPAh1x0AEy\",\"addChatItemAction\":{\"item\":{\"liveChatSponsorshipsGiftRedemptionAnnouncementRenderer\":{\"id\":\"id\",\"timestampUsec\":\"1658042000674397\",\"authorExternalChannelId\":\"UCzg2qR8VGoDqXw4ENRSVVkA\",\"authorName\":{\"simpleText\":\"name\"},\"authorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/T12pGkNn7IWO_8S-SwPNvD8n38vxvCwVWWfxYNa9o9E_vPjeJgnFsuGg68hg6L3PCRs1RZLl-A=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/T12pGkNn7IWO_8S-SwPNvD8n38vxvCwVWWfxYNa9o9E_vPjeJgnFsuGg68hg6L3PCRs1RZLl-A=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"message\":{\"runs\":[{\"text\":\"さんに \",\"italics\":true},{\"text\":\"zaltower（ざるたわー）\",\"bold\":true,\"italics\":true},{\"text\":\" さんからメンバーシップ ギフトが贈られました\",\"italics\":true}]},\"contextMenuEndpoint\":{\"clickTrackingParams\":\"CAEQl98BIhMIk5KG66__-AIV-mAPAh1x0AEy\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"liveChatItemContextMenuEndpoint\":{\"params\":\"Q2g0S0hBb2FRMG95WXpWUFQzWmZYMmREUmxWTFpIZFJiMlJmZDBsTVpVRWFLU29uQ2hoVlEzRnRNMEpSVEd4S1puWnJWSE5ZWDJoMmJUQlZiVUVTQzJnM2N6bDZiMko0V0c0MElBSW9CRElhQ2hoVlEzcG5NbkZTT0ZaSGIwUnhXSGMwUlU1U1UxWldhMEU0QWtnQVVDTSUzRA==\"}},\"contextMenuAccessibility\":{\"accessibilityData\":{\"label\":\"チャットの操作\"}},\"trackingParams\":\"CAEQl98BIhMIk5KG66__-AIV-mAPAh1x0AEy\"}}}}";
+            var a = ActionFactory.Parse(raw);
+            if (a is not LiveChatSponsorshipsGiftRedemptionAnnouncementMessage gift)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual("name", gift.AuthorName);
+            Assert.AreEqual("id", gift.Id);
+            Assert.AreEqual(1658042000674397, gift.TimestampUsec);
+            Assert.AreEqual(new List<IMessagePart> {
+                new TextPart("さんに "),
+                new TextPart("zaltower（ざるたわー）"),
+                new TextPart(" さんからメンバーシップ ギフトが贈られました"),
+            }, gift.MessageItems);
         }
     }
 }
