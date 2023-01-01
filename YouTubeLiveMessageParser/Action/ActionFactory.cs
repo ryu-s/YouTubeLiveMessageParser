@@ -74,7 +74,16 @@ namespace ryu_s.YouTubeLive.Message.Action
             }
             else if (json.ContainsKey("addLiveChatTickerItemAction"))
             {
-                if (json.addLiveChatTickerItemAction.item.ContainsKey("liveChatTickerSponsorItemRenderer"))
+                if (json.addLiveChatTickerItemAction.item.ContainsKey("liveChatTickerSponsorItemRenderer")
+                    && json.addLiveChatTickerItemAction.item.liveChatTickerSponsorItemRenderer.ContainsKey("showItemEndpoint")
+                    && json.addLiveChatTickerItemAction.item.liveChatTickerSponsorItemRenderer.showItemEndpoint.ContainsKey("showLiveChatItemEndpoint")
+                    && json.addLiveChatTickerItemAction.item.liveChatTickerSponsorItemRenderer.showItemEndpoint.showLiveChatItemEndpoint.ContainsKey("renderer")
+                    && json.addLiveChatTickerItemAction.item.liveChatTickerSponsorItemRenderer.showItemEndpoint.showLiveChatItemEndpoint.renderer.ContainsKey("liveChatSponsorshipsGiftPurchaseAnnouncementRenderer")
+                    )
+                {
+                    return SponsorshipsGiftPurchaseAnnouncement.Parse(json.addLiveChatTickerItemAction);
+                }
+                else if (json.addLiveChatTickerItemAction.item.ContainsKey("liveChatTickerSponsorItemRenderer"))
                 {
                     return TickerSponser.Parse(json.addLiveChatTickerItemAction);
                 }

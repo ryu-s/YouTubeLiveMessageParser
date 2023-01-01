@@ -320,5 +320,25 @@ namespace YouTubeLiveSitePluginTests
                 new TextPart(" か月"),
             }, text.HeaderPrimaryText);
         }
+        [Test]
+        public void ParseSponsorshipsGiftPurchaseAnnouncementTest()
+        {
+            var s = "{\"clickTrackingParams\":\"CAEQl98BIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\",\"addLiveChatTickerItemAction\":{\"item\":{\"liveChatTickerSponsorItemRenderer\":{\"id\":\"ChwKGkNOZkR1Sm5jbWZ3Q0ZTUVJyaVlkR3NvS3Nn\",\"detailText\":{\"accessibility\":{\"accessibilityData\":{\"label\":\"abc さんが 10 件のメンバーシップ ギフトを贈りました\"}},\"simpleText\":\"10\"},\"detailTextColor\":4294967295,\"startBackgroundColor\":4279213400,\"endBackgroundColor\":4278943811,\"sponsorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/iDhqiARmoEG0kuhvOlVzmeQPEXaXsjhm2HQuCn1ocNnQKUZ8rprlAukwrG6V1XliopB31Ppcxg=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/iDhqiARmoEG0kuhvOlVzmeQPEXaXsjhm2HQuCn1ocNnQKUZ8rprlAukwrG6V1XliopB31Ppcxg=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"durationSec\":1022,\"showItemEndpoint\":{\"clickTrackingParams\":\"CBoQ6ocJIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"showLiveChatItemEndpoint\":{\"renderer\":{\"liveChatSponsorshipsGiftPurchaseAnnouncementRenderer\":{\"authorExternalChannelId\":\"UCuXtlSe4ruaGAQ170i0pALQ\",\"header\":{\"liveChatSponsorshipsHeaderRenderer\":{\"authorName\":{\"simpleText\":\"abc\"},\"authorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/iDhqiARmoEG0kuhvOlVzmeQPEXaXsjhm2HQuCn1ocNnQKUZ8rprlAukwrG6V1XliopB31Ppcxg=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/iDhqiARmoEG0kuhvOlVzmeQPEXaXsjhm2HQuCn1ocNnQKUZ8rprlAukwrG6V1XliopB31Ppcxg=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"primaryText\":{\"runs\":[{\"text\":\"10\",\"bold\":true},{\"text\":\" 件の \",\"bold\":true},{\"text\":\"XYZ\",\"bold\":true},{\"text\":\" のメンバーシップ ギフトを贈りました\",\"bold\":true}]},\"authorBadges\":[{\"liveChatAuthorBadgeRenderer\":{\"customThumbnail\":{\"thumbnails\":[{\"url\":\"https://yt3.ggpht.com/x4V2u6K7_OFLAKwM1aAqHntQSOfPUscuq1tqFNrzuc8btiOXjviUX06QfpaVok8rXrZArGIT=s16-c-k\",\"width\":16,\"height\":16},{\"url\":\"https://yt3.ggpht.com/x4V2u6K7_OFLAKwM1aAqHntQSOfPUscuq1tqFNrzuc8btiOXjviUX06QfpaVok8rXrZArGIT=s32-c-k\",\"width\":32,\"height\":32}]},\"tooltip\":\"メンバー（6 か月）\",\"accessibility\":{\"accessibilityData\":{\"label\":\"メンバー（6 か月）\"}}}}],\"contextMenuEndpoint\":{\"clickTrackingParams\":\"CBsQjtEGIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"liveChatItemContextMenuEndpoint\":{\"params\":\"Q2g0S0hBb2FRMDVtUkhWS2JtTnRabmREUmxOUlVuSlJXV1JIYzI5TGMyY2FLU29uQ2hoVlEwRlhVM2xGYzE5SmJ6aE5kSEJaTTIwdGVuRkpURUVTQ3pKeVduVkJOalp6YUdFNElBSW9CRElhQ2hoVlEzVllkR3hUWlRSeWRXOUhRVkV4TnpCcE1IQkJURkU0QWtnQVVDUSUzRA==\"}},\"contextMenuAccessibility\":{\"accessibilityData\":{\"label\":\"チャットの操作\"}},\"image\":{\"thumbnails\":[{\"url\":\"https://www.gstatic.com/youtube/img/sponsorships/sponsorships_gift_purchase_announcement_artwork.png\"}]}}},\"optInPrompt\":{\"buttonRenderer\":{\"style\":\"STYLE_TEXT\",\"size\":\"SIZE_DEFAULT\",\"isDisabled\":false,\"text\":{\"simpleText\":\"メンバーシップ ギフトを購入\"},\"icon\":{\"iconType\":\"GIFT\"},\"trackingParams\":\"CBwQ9-4JIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\",\"command\":{\"clickTrackingParams\":\"CBwQ9-4JIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\",\"showSponsorshipsGiftOfferDialogCommand\":{\"contentCommand\":{\"clickTrackingParams\":\"CBwQ9-4JIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\",\"commandMetadata\":{\"webCommandMetadata\":{\"sendPost\":true,\"apiUrl\":\"/youtubei/v1/ypc/get_offers\"}},\"ypcOffersEndpoint\":{\"params\":\"ChwIAxIYVUNBV1N5RXNfSW84TXRwWTNtLXpxSUxBGA8yLtIBKwopKicKGFVDQVdTeUVzX0lvOE10cFkzbS16cUlMQRILMnJadUE2NnNoYTg%3D\"}}}}}}}},\"trackingParams\":\"CBsQjtEGIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\"}},\"authorExternalChannelId\":\"UCuXtlSe4ruoGAQ170i0pALQ\",\"fullDurationSec\":1800,\"trackingParams\":\"CBoQ6ocJIhMIm4bJk9-Z_AIVCZtYCh1uCw-s\",\"detailIcon\":{\"iconType\":\"GIFT\"}}},\"durationSec\":\"1022\"}}";
+            var a = ActionFactory.Parse(s);
+            if (a is not SponsorshipsGiftPurchaseAnnouncement text)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual("ChwKGkNOZkR1Sm5jbWZ3Q0ZTUVJyaVlkR3NvS3Nn", text.Id);
+            Assert.AreEqual("UCuXtlSe4ruaGAQ170i0pALQ", text.AuthorExternalChannelId);
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("10"),
+                new TextPart(" 件の "),
+                new TextPart("XYZ"),
+                new TextPart(" のメンバーシップ ギフトを贈りました"),
+            }, text.HeaderPrimaryText);
+        }
     }
 }
