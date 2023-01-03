@@ -3,7 +3,7 @@ using System;
 
 namespace ryu_s.YouTubeLive.Message
 {
-    public class YtCfg
+    public class LiveChatYtCfg
     {
         /// <summary>
         /// 
@@ -15,15 +15,15 @@ namespace ryu_s.YouTubeLive.Message
         public string InnertubeContext { get; }
         public string XsrfToken { get; }
         public bool IsLoggedIn { get; }
-        public YtCfg(string json)
+        public LiveChatYtCfg(string json)
         {
             dynamic? obj = JsonConvert.DeserializeObject(json);
-            if(obj == null)
+            if (obj == null)
             {
                 throw new ArgumentException();
             }
             DelegatedSessionId = (string?)obj.DELEGATED_SESSION_ID;
-            IdToken =(string?)obj.ID_TOKEN;
+            IdToken = (string?)obj.ID_TOKEN;
             InnertubeApiKey = (string)obj.INNERTUBE_API_KEY;
             InnertubeContext = (string)obj.INNERTUBE_CONTEXT.ToString(Formatting.None);
             XsrfToken = (string)obj.XSRF_TOKEN;
