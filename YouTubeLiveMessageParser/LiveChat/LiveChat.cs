@@ -6,8 +6,8 @@ namespace ryu_s.YouTubeLive.Message
     public class LiveChat
     {
         public LiveChatYtCfg YtCfg { get; }
-        public YtInitialData YtInitialData { get; }
-        private LiveChat(LiveChatYtCfg ytCfg, YtInitialData ytInitialData)
+        public LiveChatYtInitialData YtInitialData { get; }
+        private LiveChat(LiveChatYtCfg ytCfg, LiveChatYtInitialData ytInitialData)
         {
             YtCfg = ytCfg;
             YtInitialData = ytInitialData;
@@ -35,7 +35,7 @@ namespace ryu_s.YouTubeLive.Message
             var raw = match.Groups[1].Value;
             return new LiveChatYtCfg(raw);
         }
-        private static YtInitialData ExtractYtInitialData(string html)
+        private static LiveChatYtInitialData ExtractYtInitialData(string html)
         {
             var match = Regex.Match(html, "<script[^>]*>window\\[\"ytInitialData\"\\]\\s*=\\s*({.+?});</script>");
             if (!match.Success)
@@ -43,7 +43,7 @@ namespace ryu_s.YouTubeLive.Message
                 throw new ParseException(html);
             }
             var raw = match.Groups[1].Value;
-            return YtInitialData.Parse(raw);
+            return LiveChatYtInitialData.Parse(raw);
         }
     }
 }

@@ -7,7 +7,7 @@ using ryu_s.YouTubeLive.Message.Continuation;
 
 namespace ryu_s.YouTubeLive.Message
 {
-    public class YtInitialData
+    public class LiveChatYtInitialData
     {
         public IContinuation? Continuation { get; }
         public List<IAction> Actions { get; }
@@ -15,7 +15,7 @@ namespace ryu_s.YouTubeLive.Message
         public string? MessageSendButtonServiceEndpointClientIdPrefix { get; }
         public string JouiChatContinuation { get; }
         public string AllChatContinuation { get; }
-        public YtInitialData(IContinuation? continuation, List<IAction> actions, string? endpoint, string? clientIdPrefix, string jouiChatContinuation, string allChatContinuation)
+        public LiveChatYtInitialData(IContinuation? continuation, List<IAction> actions, string? endpoint, string? clientIdPrefix, string jouiChatContinuation, string allChatContinuation)
         {
             Continuation = continuation;
             Actions = actions;
@@ -24,7 +24,7 @@ namespace ryu_s.YouTubeLive.Message
             JouiChatContinuation = jouiChatContinuation;
             AllChatContinuation = allChatContinuation;
         }
-        public static YtInitialData Parse(string raw)
+        public static LiveChatYtInitialData Parse(string raw)
         {
             dynamic? obj = JsonConvert.DeserializeObject(raw);
             if (obj == null)
@@ -34,7 +34,7 @@ namespace ryu_s.YouTubeLive.Message
             if (!obj.contents.ContainsKey("liveChatRenderer"))
             {
                 //このライブ ストリームではチャットは無効です。
-                return new YtInitialData(null, new List<IAction>(), null, null, "", "");
+                return new LiveChatYtInitialData(null, new List<IAction>(), null, null, "", "");
             }
             var continuation = ContinuationFactory.ParseContinuation(obj.contents.liveChatRenderer.continuations[0]);
             var actions = new List<IAction>();
@@ -56,7 +56,7 @@ namespace ryu_s.YouTubeLive.Message
             }
             var allChatContinuation = (string)obj.contents.liveChatRenderer.header.liveChatHeaderRenderer.viewSelector.sortFilterSubMenuRenderer.subMenuItems[1].continuation.reloadContinuationData.continuation;
             var jouiChatContinuation = (string)obj.contents.liveChatRenderer.header.liveChatHeaderRenderer.viewSelector.sortFilterSubMenuRenderer.subMenuItems[0].continuation.reloadContinuationData.continuation;
-            return new YtInitialData(continuation, actions, endpoint, clientIdPrefix,jouiChatContinuation,allChatContinuation);
+            return new LiveChatYtInitialData(continuation, actions, endpoint, clientIdPrefix, jouiChatContinuation, allChatContinuation);
         }
         public static string? ExtractSendButtonServiceEndpoint(string ytInitialData)
         {
