@@ -52,5 +52,18 @@ namespace ryu_s.YouTubeLive.Message.Action
             }
             return messageItems;
         }
+        public static List<IAuthorBadge> GetAuthorBadges(dynamic renderer)
+        {
+            var authorBadges = new List<IAuthorBadge>();
+            if (renderer.ContainsKey("authorBadges"))
+            {
+                foreach (var badge in renderer.authorBadges)
+                {
+                    var c = AuthorBadgeFactory.Parse(badge);
+                    authorBadges.Add(c);
+                }
+            }
+            return authorBadges;
+        }
     }
 }

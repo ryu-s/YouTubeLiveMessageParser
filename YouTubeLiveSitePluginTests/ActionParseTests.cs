@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Collections.Generic;
 using ryu_s.YouTubeLive.Message;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace YouTubeLiveSitePluginTests
 {
@@ -339,6 +340,24 @@ namespace YouTubeLiveSitePluginTests
                 new TextPart("XYZ"),
                 new TextPart(" のメンバーシップ ギフトを贈りました"),
             }, text.HeaderPrimaryText);
+        }
+        [Test]
+        public void ParsePaidStickerTest()
+        {
+            var s = "{\"clickTrackingParams\":\"CAEQl98BIhMIzuHdw-CA_QIVo0D1BR3nAgg9\",\"addChatItemAction\":{\"item\":{\"liveChatPaidStickerRenderer\":{\"id\":\"ChwKGkNLWHY3cnJnZ1AwQ0ZlMFFyUVlkVEJNUHJB\",\"contextMenuEndpoint\":{\"clickTrackingParams\":\"CAkQ77sEIhMIzuHdw-CA_QIVo0D1BR3nAgg9\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"liveChatItemContextMenuEndpoint\":{\"params\":\"Q2g0S0hBb2FRMHRZZGpkeWNtZG5VREJEUm1Vd1VYSlJXV1JVUWsxUWNrRWFLU29uQ2hoVlEydEphVzFYV2psblFrcFNZVzFMUmpCeWJWQlZPSGNTQzBOVWIyeFRhMVoxWmtOTklBSW9CRElhQ2hoVlEyaEdNQzFKVEROWE4zazBPWEpVY1ZwTlNFeGZWbEU0QWtnQVVCUSUzRA==\"}},\"contextMenuAccessibility\":{\"accessibilityData\":{\"label\":\"チャットの操作\"}},\"timestampUsec\":\"1675681627308582\",\"authorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/ytc/AL5GRJXTMyVXR_CJICIS3vWscRxdpHZeffpk0vj7RhecaA=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/ytc/AL5GRJXTMyVXR_CJICIS3vWscRxdpHZeffpk0vj7RhecaA=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"authorName\":{\"simpleText\":\"マウンテン\"},\"authorExternalChannelId\":\"UChF0-IL3W7y49rTqZMHL_VQ\",\"sticker\":{\"thumbnails\":[{\"url\":\"//lh3.googleusercontent.com/qUL5j6d0fw7vRxVjNGWspPBtE_m71Nkbe9baHIMiMrQzlueLBYw_ReleYcWamTb0hsgkQiIbYkoC3IshxfU=s88-rg\",\"width\":88,\"height\":88},{\"url\":\"//lh3.googleusercontent.com/qUL5j6d0fw7vRxVjNGWspPBtE_m71Nkbe9baHIMiMrQzlueLBYw_ReleYcWamTb0hsgkQiIbYkoC3IshxfU=s176-rg\",\"width\":176,\"height\":176}],\"accessibility\":{\"accessibilityData\":{\"label\":\"拍手をしている柴犬\"}}},\"authorBadges\":[{\"liveChatAuthorBadgeRenderer\":{\"customThumbnail\":{\"thumbnails\":[{\"url\":\"https://yt3.ggpht.com/ct39Wyi5yhCh21zD7wYHZ_pQqr5tblEkBMhMWihuo6KEivAA-M8kmfDhOabGenJay4CprbGM=s16-c-k\",\"width\":16,\"height\":16},{\"url\":\"https://yt3.ggpht.com/ct39Wyi5yhCh21zD7wYHZ_pQqr5tblEkBMhMWihuo6KEivAA-M8kmfDhOabGenJay4CprbGM=s32-c-k\",\"width\":32,\"height\":32}]},\"tooltip\":\"メンバー（2 か月）\",\"accessibility\":{\"accessibilityData\":{\"label\":\"メンバー（2 か月）\"}}}}],\"moneyChipBackgroundColor\":4280150454,\"moneyChipTextColor\":4278190080,\"purchaseAmountText\":{\"simpleText\":\"￥500\"},\"stickerDisplayWidth\":88,\"stickerDisplayHeight\":88,\"backgroundColor\":4278239141,\"authorNameTextColor\":2315255808,\"trackingParams\":\"CAkQ77sEIhMIzuHdw-CA_QIVo0D1BR3nAgg9\"}}}}";
+            var a = ActionFactory.Parse(s);
+            if (a is not PaidSticker paidSticker)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual("ChwKGkNLWHY3cnJnZ1AwQ0ZlMFFyUVlkVEJNUHJB", paidSticker.Id);
+            Assert.AreEqual(1675681627308582, paidSticker.TimestampUsec);
+            Assert.AreEqual("￥500", paidSticker.PurchaseAmount);
+            Assert.AreEqual("https://lh3.googleusercontent.com/qUL5j6d0fw7vRxVjNGWspPBtE_m71Nkbe9baHIMiMrQzlueLBYw_ReleYcWamTb0hsgkQiIbYkoC3IshxfU=s88-rg", paidSticker.StickerThumbnailUrl);
+            Assert.AreEqual(88, paidSticker.StickerThumbnailWidth);
+            Assert.AreEqual(88, paidSticker.StickerThumbnailHeight);
+            Assert.AreEqual("拍手をしている柴犬", paidSticker.StickerTooltip);
         }
     }
 }

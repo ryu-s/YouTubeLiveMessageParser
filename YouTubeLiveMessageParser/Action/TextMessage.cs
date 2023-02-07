@@ -28,7 +28,7 @@ namespace ryu_s.YouTubeLive.Message.Action
         public static TextMessage Parse(string json)
         {
             dynamic? d = JsonConvert.DeserializeObject(json);
-            if(d == null)
+            if (d == null)
             {
                 throw new ArgumentException();
             }
@@ -68,6 +68,32 @@ namespace ryu_s.YouTubeLive.Message.Action
         }
     }
     public interface IAuthorBadge { }
+    public class AuthorBadgeCustomThumbWithSize : IAuthorBadge
+    {
+        public List<Thumbnail2> Thumbnails { get; }
+        public string Tooltip { get; }
+        public AuthorBadgeCustomThumbWithSize(List<Thumbnail2> thumbnails, string tooltip)
+        {
+            Thumbnails = thumbnails;
+            Tooltip = tooltip;
+        }
+        public override bool Equals(object obj)
+        {
+            if (!(obj is AuthorBadgeCustomThumbWithSize b))
+            {
+                return false;
+            }
+            return Enumerable.SequenceEqual(Thumbnails, b.Thumbnails) && Tooltip == b.Tooltip;
+        }
+        public override int GetHashCode()
+        {
+            return Thumbnails.GetHashCode() ^ Tooltip.GetHashCode();
+        }
+        public override string ToString()
+        {
+            return $"AuthorBadgeCustomThumbWithSize tooltip={Tooltip}";
+        }
+    }
     public class AuthorBadgeCustomThumb : IAuthorBadge
     {
         public List<Thumbnail1> Thumbnails { get; }
@@ -83,7 +109,7 @@ namespace ryu_s.YouTubeLive.Message.Action
             {
                 return false;
             }
-            return Enumerable.SequenceEqual(Thumbnails,b.Thumbnails) && Tooltip == b.Tooltip;
+            return Enumerable.SequenceEqual(Thumbnails, b.Thumbnails) && Tooltip == b.Tooltip;
         }
         public override int GetHashCode()
         {
@@ -105,11 +131,11 @@ namespace ryu_s.YouTubeLive.Message.Action
         }
         public override bool Equals(object obj)
         {
-            if(!(obj is AuthorBadgeIcon b))
+            if (!(obj is AuthorBadgeIcon b))
             {
                 return false;
             }
-            return IconType==b.IconType && Tooltip==b.Tooltip;
+            return IconType == b.IconType && Tooltip == b.Tooltip;
         }
         public override int GetHashCode()
         {
@@ -141,14 +167,32 @@ namespace ryu_s.YouTubeLive.Message.Action
             }
             else if (json.liveChatAuthorBadgeRenderer.ContainsKey("customThumbnail"))
             {
-                var thumbnails = new List<Thumbnail1>();
-                foreach (var thumb in json.liveChatAuthorBadgeRenderer.customThumbnail.thumbnails)
+                var customThum = json.liveChatAuthorBadgeRenderer.customThumbnail;
+                if (customThum.thumbnails.Count > 0 && customThum.thumbnails[0].ContainsKey("width"))
                 {
-                    var url = (string)thumb.url;
-                    thumbnails.Add(new Thumbnail1(url));
+                    var thumbnails = new List<Thumbnail2>();
+                    foreach (var thumb in json.liveChatAuthorBadgeRenderer.customThumbnail.thumbnails)
+                    {
+                        var url = (string)thumb.url;
+                        var width = (int)thumb.width;
+                        var height = (int)thumb.height;
+                        thumbnails.Add(new Thumbnail2(url, width, height));
+                    }
+                    var tooltip = (string)json.liveChatAuthorBadgeRenderer.tooltip;
+                    return new AuthorBadgeCustomThumbWithSize(thumbnails, tooltip);
                 }
-                var tooltip = (string)json.liveChatAuthorBadgeRenderer.tooltip;
-                return new AuthorBadgeCustomThumb(thumbnails, tooltip);
+                else
+                {
+                    //最近はwidthやheightが付記されている？
+                    var thumbnails = new List<Thumbnail1>();
+                    foreach (var thumb in json.liveChatAuthorBadgeRenderer.customThumbnail.thumbnails)
+                    {
+                        var url = (string)thumb.url;
+                        thumbnails.Add(new Thumbnail1(url));
+                    }
+                    var tooltip = (string)json.liveChatAuthorBadgeRenderer.tooltip;
+                    return new AuthorBadgeCustomThumb(thumbnails, tooltip);
+                }
             }
             throw new NotImplementedException();
         }
