@@ -294,5 +294,27 @@ namespace YouTubeLiveSitePluginTests
             Assert.AreEqual(88, paidSticker.StickerThumbnailHeight);
             Assert.AreEqual("拍手をしている柴犬", paidSticker.StickerTooltip);
         }
+        [Test]
+        public void ParseSponsorshipsGiftPurchaseAnnouncementTest2()
+        {
+            var s = "{\"clickTrackingParams\":\"CAEQl98BIhMIgt799M-A_QIVGJZWAR0X0A-T\",\"addChatItemAction\":{\"item\":{\"liveChatSponsorshipsGiftPurchaseAnnouncementRenderer\":{\"id\":\"ChwKGkNNLTFpZTdQZ1AwQ0ZlMFFyUVlkVEJNUHJB\",\"timestampUsec\":\"1675677171112706\",\"authorExternalChannelId\":\"UCJDkaeOdy2GM7VawOYJmFzw\",\"header\":{\"liveChatSponsorshipsHeaderRenderer\":{\"authorName\":{\"simpleText\":\"くろくろむーじ\"},\"authorPhoto\":{\"thumbnails\":[{\"url\":\"https://yt4.ggpht.com/Zdcma142j-wWDF0KhpoEd_AgzY-zNOeIOOwu5uG4mdwCSy1ZuiKKVeuJmNqZfCDqElade4WlAw=s32-c-k-c0x00ffffff-no-rj\",\"width\":32,\"height\":32},{\"url\":\"https://yt4.ggpht.com/Zdcma142j-wWDF0KhpoEd_AgzY-zNOeIOOwu5uG4mdwCSy1ZuiKKVeuJmNqZfCDqElade4WlAw=s64-c-k-c0x00ffffff-no-rj\",\"width\":64,\"height\":64}]},\"primaryText\":{\"runs\":[{\"text\":\"5\",\"bold\":true},{\"text\":\" 件の \",\"bold\":true},{\"text\":\"XYZ\",\"bold\":true},{\"text\":\" のメンバーシップ ギフトを贈りました\",\"bold\":true}]},\"authorBadges\":[{\"liveChatAuthorBadgeRenderer\":{\"customThumbnail\":{\"thumbnails\":[{\"url\":\"https://yt3.ggpht.com/9TiMAgak7dR01Gl1OcNnbBvge1ESIg_QezRjcYFn_GQ3xcnC7D2Ea7VT_rq_kNwQLVvj79Uhvw=s16-c-k\",\"width\":16,\"height\":16},{\"url\":\"https://yt3.ggpht.com/9TiMAgak7dR01Gl1OcNnbBvge1ESIg_QezRjcYFn_GQ3xcnC7D2Ea7VT_rq_kNwQLVvj79Uhvw=s32-c-k\",\"width\":32,\"height\":32}]},\"tooltip\":\"メンバー（2 年）\",\"accessibility\":{\"accessibilityData\":{\"label\":\"メンバー（2 年）\"}}}}],\"contextMenuEndpoint\":{\"clickTrackingParams\":\"CAYQ3MMKIhMIgt799M-A_QIVGJZWAR0X0A-T\",\"commandMetadata\":{\"webCommandMetadata\":{\"ignoreNavigation\":true}},\"liveChatItemContextMenuEndpoint\":{\"params\":\"Q2g0S0hBb2FRMDB0TVdsbE4xQm5VREJEUm1Vd1VYSlJXV1JVUWsxUWNrRWFLU29uQ2hoVlEwRlhVM2xGYzE5SmJ6aE5kSEJaTTIwdGVuRkpURUVTQzNaaWRuWTJlRWRtVWxabklBSW9CRElhQ2hoVlEwcEVhMkZsVDJSNU1rZE5OMVpoZDA5WlNtMUdlbmM0QWtnQVVDUSUzRA==\"}},\"contextMenuAccessibility\":{\"accessibilityData\":{\"label\":\"チャットの操作\"}},\"image\":{\"thumbnails\":[{\"url\":\"https://www.gstatic.com/youtube/img/sponsorships/sponsorships_gift_purchase_announcement_artwork.png\"}]}}}}}}}";
+            var a = ActionFactory.Parse(s);
+            if (a is not SponsorshipsGiftPurchaseAnnouncement text)
+            {
+                Assert.Fail();
+                return;
+            }
+            Assert.AreEqual("ChwKGkNNLTFpZTdQZ1AwQ0ZlMFFyUVlkVEJNUHJB", text.Id);
+            Assert.AreEqual(1675677171112706, text.TimestampUsec);
+            Assert.AreEqual("UCJDkaeOdy2GM7VawOYJmFzw", text.ChannelId);
+            Assert.AreEqual(new List<IMessagePart>
+            {
+                new TextPart("5"),
+                new TextPart(" 件の "),
+                new TextPart("XYZ"),
+                new TextPart(" のメンバーシップ ギフトを贈りました"),
+            }, text.HeaderPrimaryText);
+            Assert.AreEqual("https://www.gstatic.com/youtube/img/sponsorships/sponsorships_gift_purchase_announcement_artwork.png", text.Image.Url);
+        }
     }
 }

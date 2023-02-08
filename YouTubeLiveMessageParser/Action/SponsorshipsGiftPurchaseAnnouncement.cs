@@ -4,47 +4,42 @@ namespace ryu_s.YouTubeLive.Message.Action
 {
     public class SponsorshipsGiftPurchaseAnnouncement : IAction
     {
-        public string Id { get; }
-        public string AuthorName { get; }
-        public List<IMessagePart> HeaderPrimaryText { get; }
-        public Thumbnail2 AuthorPhoto { get; }
-        public string AuthorExternalChannelId { get; }
-        public List<IAuthorBadge> AuthorBadges { get; }
-        private SponsorshipsGiftPurchaseAnnouncement(string id, string authorName, List<IMessagePart> headerPrimaryText,
-            Thumbnail2 authorPhoto, string channelId, List<IAuthorBadge> authorBadges)
-        {
-            Id = id;
-            AuthorName = authorName;
-            HeaderPrimaryText = headerPrimaryText;
-            AuthorPhoto = authorPhoto;
-            AuthorExternalChannelId = channelId;
-            AuthorBadges = authorBadges;
-        }
+        public string Id { get; private set; }
+        public long TimestampUsec { get; private set; }
+        public string ChannelId { get; private set; }
+        public string AuthorName { get; private set; }
+        public List<IMessagePart> HeaderPrimaryText { get; private set; }
+        public Thumbnail2 AuthorPhoto { get; private set; }
+        public List<IAuthorBadge> AuthorBadges { get; private set; }
+        public Thumbnail1 Image { get; private set; }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private SponsorshipsGiftPurchaseAnnouncement() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public static SponsorshipsGiftPurchaseAnnouncement Parse(dynamic json)
         {
-            var renderer = json.item.liveChatTickerSponsorItemRenderer;
-
-            var membershipItemRenderer = renderer.showItemEndpoint.showLiveChatItemEndpoint.renderer.liveChatSponsorshipsGiftPurchaseAnnouncementRenderer;
+            var renderer = json.item.liveChatSponsorshipsGiftPurchaseAnnouncementRenderer;
             var id = (string)renderer.id;
-            var authorName = ActionTools.SimpleTextToString(membershipItemRenderer.header.liveChatSponsorshipsHeaderRenderer.authorName);
-            var headerPrimaryText = ActionTools.RunsToString(membershipItemRenderer.header.liveChatSponsorshipsHeaderRenderer.primaryText);
-            var authorPhoto = Thumbnail2.Parse(membershipItemRenderer.header.liveChatSponsorshipsHeaderRenderer.authorPhoto.thumbnails[0]);
-            var channelId = (string)membershipItemRenderer.authorExternalChannelId;
-            var authorBadges = GetAuthorBadges(membershipItemRenderer.header.liveChatSponsorshipsHeaderRenderer);
-            return new SponsorshipsGiftPurchaseAnnouncement(id, authorName, headerPrimaryText, authorPhoto, channelId, authorBadges);
-        }
-        private static List<IAuthorBadge> GetAuthorBadges(dynamic renderer)
-        {
-            var authorBadges = new List<IAuthorBadge>();
-            if (renderer.ContainsKey("authorBadges"))
+            var timestampUsec = long.Parse((string)renderer.timestampUsec);
+            var channelId = (string)renderer.authorExternalChannelId;
+
+            var header = renderer.header.liveChatSponsorshipsHeaderRenderer;
+
+            var authorName = ActionTools.SimpleTextToString(header.authorName);
+            var headerPrimaryText = ActionTools.RunsToString(header.primaryText);
+            var authorPhoto = Thumbnail2.Parse(header.authorPhoto.thumbnails[0]);
+            var authorBadges = ActionTools.GetAuthorBadges(header);
+            var image = Thumbnail1.Parse(header.image.thumbnails[0]);
+            return new SponsorshipsGiftPurchaseAnnouncement
             {
-                foreach (var badge in renderer.authorBadges)
-                {
-                    var c = AuthorBadgeFactory.Parse(badge);
-                    authorBadges.Add(c);
-                }
-            }
-            return authorBadges;
+                AuthorBadges = authorBadges,
+                AuthorName = authorName,
+                AuthorPhoto = authorPhoto,
+                ChannelId = channelId,
+                HeaderPrimaryText = headerPrimaryText,
+                Id = id,
+                TimestampUsec = timestampUsec,
+                Image = image,
+            };
         }
     }
 }
