@@ -15,7 +15,7 @@ namespace ryu_s.YouTubeLive.Message.Action
         public Thumbnail2 AuthorPhoto { get; private set; }
         public string AuthorExternalChannelId { get; private set; }
         public List<IAuthorBadge> AuthorBadges { get; private set; }
-        public static SuperChat Parse(string json)
+        public static MemberShip Parse(string json)
         {
             dynamic? d = JsonConvert.DeserializeObject(json);
             if (d == null)
