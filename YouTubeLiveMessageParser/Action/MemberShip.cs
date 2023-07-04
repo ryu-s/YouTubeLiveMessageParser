@@ -4,8 +4,16 @@ using System.Collections.Generic;
 
 namespace ryu_s.YouTubeLive.Message.Action
 {
+    /// <summary>
+    /// メンバーシップ登録、メンバーシップメッセージ
+    /// </summary>
     public class MemberShip : IAction
     {
+        //メンバーシップ登録と月１かなんかで送れるメンバーシップメッセージ（正式名称ではない）で兼用される。
+        //公式でどちらもliveChatMembershipItemRendererだからここでも同じものとして扱う。
+        //公式のメッセージの見分け方は、headerPrimaryTextがあるかどうか。
+        //メンバーシップ登録には無くて、メンバーシップメッセージにはある。
+        //ちなみにメンバーシップ登録にはmessageも無いけど、メンバーシップメッセージにはあるやつと無いやつがある。多分。
         public IReadOnlyList<IMessagePart> HeaderPrimaryTextItems { get; private set; }
         public IReadOnlyList<IMessagePart> HeaderSubTextItems { get; private set; }
         public IReadOnlyList<IMessagePart> MessageItems { get; private set; }
