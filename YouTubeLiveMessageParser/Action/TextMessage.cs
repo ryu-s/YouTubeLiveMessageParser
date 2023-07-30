@@ -77,7 +77,7 @@ namespace ryu_s.YouTubeLive.Message.Action
             Thumbnails = thumbnails;
             Tooltip = tooltip;
         }
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is AuthorBadgeCustomThumbWithSize b))
             {
@@ -103,7 +103,7 @@ namespace ryu_s.YouTubeLive.Message.Action
             Thumbnails = thumbnails;
             Tooltip = tooltip;
         }
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is AuthorBadgeCustomThumb b))
             {
@@ -129,7 +129,7 @@ namespace ryu_s.YouTubeLive.Message.Action
             IconType = iconType;
             Tooltip = tooltip;
         }
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is AuthorBadgeIcon b))
             {
