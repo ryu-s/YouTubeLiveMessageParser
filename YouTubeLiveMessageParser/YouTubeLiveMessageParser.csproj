@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net60</TargetFramework>
-    <LangVersion>8.0</LangVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>0.0.1</AssemblyVersion>
     <Nullable>enable</Nullable>
