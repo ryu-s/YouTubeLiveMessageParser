@@ -9,7 +9,7 @@ namespace YouTubeLiveSitePluginTests
         public void ParseLiveChatTest()
         {
             var s = Tools.GetSampleData("LiveChat.txt");
-            var liveChat=LiveChat.Parse(s);
+            var liveChat = LiveChat.Parse(new LiveChatHtml(s));
             Assert.AreEqual("103208314919748213421", liveChat.YtCfg.DelegatedSessionId);
             Assert.AreEqual("QUFFLUhqazJ3MlF5aWxmbkFOaFhyOUFKSG9kaE10d19zUXw=", liveChat.YtCfg.IdToken);
             Assert.AreEqual("AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8", liveChat.YtCfg.InnertubeApiKey);
@@ -25,7 +25,7 @@ namespace YouTubeLiveSitePluginTests
         public void ParseLiveChatTest2()
         {
             var s = Tools.GetSampleData("LiveChat2.txt");
-            var liveChat = LiveChat.Parse(s);
+            var liveChat = LiveChat.Parse(new LiveChatHtml(s));
             Assert.AreEqual("103208314919748213421", liveChat.YtCfg.DelegatedSessionId);
             Assert.AreEqual("QUFFLUhqazJ3MlF5aWxmbkFOaFhyOUFKSG9kaE10d19zUXw=", liveChat.YtCfg.IdToken);
             Assert.AreEqual("AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8", liveChat.YtCfg.InnertubeApiKey);
@@ -44,12 +44,12 @@ namespace YouTubeLiveSitePluginTests
         public void ParseLiveChatTest3()
         {
             var s = Tools.GetSampleData("LiveChat3.txt");
-            var liveChat = LiveChat.Parse(s);
+            var liveChat = LiveChat.Parse(new LiveChatHtml(s));
             Assert.IsNull(liveChat.YtCfg.DelegatedSessionId);
-            Assert.IsNull( liveChat.YtCfg.IdToken);
+            Assert.IsNull(liveChat.YtCfg.IdToken);
             Assert.AreEqual("AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8", liveChat.YtCfg.InnertubeApiKey);
             Assert.IsTrue(liveChat.YtCfg.InnertubeContext.StartsWith("{"));
-            Assert.IsTrue( liveChat.YtCfg.XsrfToken.StartsWith("QUFF"));
+            Assert.IsTrue(liveChat.YtCfg.XsrfToken.StartsWith("QUFF"));
             Assert.IsFalse(liveChat.YtCfg.IsLoggedIn);
             Assert.IsNull(liveChat.YtInitialData.MessageSendButtonServiceEndpoint);
             Assert.IsNull(liveChat.YtInitialData.MessageSendButtonServiceEndpointClientIdPrefix);

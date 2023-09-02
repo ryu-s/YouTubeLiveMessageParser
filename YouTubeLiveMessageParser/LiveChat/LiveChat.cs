@@ -12,7 +12,7 @@ namespace ryu_s.YouTubeLive.Message
             YtCfg = ytCfg;
             YtInitialData = ytInitialData;
         }
-        public static LiveChat Parse(string html)
+        public static LiveChat Parse(LiveChatHtml html)
         {
             try
             {
@@ -22,12 +22,12 @@ namespace ryu_s.YouTubeLive.Message
             }
             catch (Exception ex)
             {
-                throw new ParseException(ex, html);
+                throw new ParseException(ex, html.Raw);
             }
         }
-        private static LiveChatYtCfg ExtractYtCfg(string html)
+        private static LiveChatYtCfg ExtractYtCfg(LiveChatHtml html)
         {
-            var match = Regex.Match(html, "<script[^>]*>ytcfg\\.set\\(({.+?})\\);");//</script>");
+            var match = Regex.Match(html.Raw, "<script[^>]*>ytcfg\\.set\\(({.+?})\\);");//</script>");
             if (!match.Success)
             {
                 throw new YtCfgParseException();
@@ -35,12 +35,12 @@ namespace ryu_s.YouTubeLive.Message
             var raw = match.Groups[1].Value;
             return new LiveChatYtCfg(raw);
         }
-        private static LiveChatYtInitialData ExtractYtInitialData(string html)
+        private static LiveChatYtInitialData ExtractYtInitialData(LiveChatHtml html)
         {
-            var match = Regex.Match(html, "<script[^>]*>window\\[\"ytInitialData\"\\]\\s*=\\s*({.+?});</script>");
+            var match = Regex.Match(html.Raw, "<script[^>]*>window\\[\"ytInitialData\"\\]\\s*=\\s*({.+?});</script>");
             if (!match.Success)
             {
-                throw new ParseException(html);
+                throw new ParseException(html.Raw);
             }
             var raw = match.Groups[1].Value;
             return LiveChatYtInitialData.Parse(raw);
