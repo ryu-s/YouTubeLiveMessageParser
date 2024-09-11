@@ -108,6 +108,11 @@ namespace ryu_s.YouTubeLive.Message.Action
             {
                 return IgnoredMessage.Parse(json.commandMetadata);
             }
+            else if (json.ContainsKey("removeChatItemAction"))
+            {
+                //{{               "removeChatItemAction": {                    "targetItemId": "ChwKGkNLZllxYjJjdW9nREZidld3Z1FkeDJjc3NB"                }
+                return RemoveChatItem.Parse(json.removeChatItemAction);
+            }
             else
             {
                 return new ParseError(json.ToString());
