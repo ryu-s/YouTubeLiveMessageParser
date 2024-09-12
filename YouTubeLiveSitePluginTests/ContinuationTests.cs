@@ -15,8 +15,8 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual(5195, timed.TimeoutMs);
-            Assert.AreEqual("abc", timed.Continaution);
+            Assert.That(timed.TimeoutMs, Is.EqualTo(5195));
+            Assert.That(timed.Continaution, Is.EqualTo("abc"));
         }
         [Test]
         public void ParseReloadContinuationTest()
@@ -28,7 +28,7 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("abc", reload.Continaution);
+            Assert.That(reload.Continaution, Is.EqualTo("abc"));
         }
     }
 }

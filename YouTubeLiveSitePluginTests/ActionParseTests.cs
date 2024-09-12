@@ -19,7 +19,7 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("abc", err.Raw);
+            Assert.That(err.Raw, Is.EqualTo("abc"));
         }
         [Test]
         public void ParseTextMessageTest()
@@ -31,13 +31,10 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("name", text.AuthorName);
-            Assert.AreEqual("id", text.Id);
-            Assert.AreEqual(1631202054190683, text.TimestampUsec);
-            Assert.AreEqual(new List<IMessagePart> {
-                new TextPart("abc")
-            }, text.MessageItems);
-
+            Assert.That(text.AuthorName, Is.EqualTo("name"));
+            Assert.That(text.Id, Is.EqualTo("id"));
+            Assert.That(text.TimestampUsec, Is.EqualTo(1631202054190683));
+            Assert.That(text.MessageItems, Is.EqualTo(new List<IMessagePart> { new TextPart("abc") }));
         }
         [Test]
         public void ParseSuperchatTest()
@@ -49,15 +46,12 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("UCsduCAn_VyCdvlqA_D36j9A", text.AuthorExternalChannelId);
-            Assert.AreEqual("￥300", text.PurchaseAmount);
-            Assert.AreEqual("しらたき。", text.AuthorName);
-            Assert.AreEqual("ChwKGkNLREw3djZoblBJQ0ZSZ1ByUVlkX25VRklR", text.Id);
-            Assert.AreEqual(1628248435329905, text.TimestampUsec);
-            Assert.AreEqual(new List<IMessagePart> {
-                new TextPart("abcdefg")
-            }, text.MessageItems);
-
+            Assert.That(text.AuthorExternalChannelId, Is.EqualTo("UCsduCAn_VyCdvlqA_D36j9A"));
+            Assert.That(text.PurchaseAmount, Is.EqualTo("￥300"));
+            Assert.That(text.AuthorName, Is.EqualTo("しらたき。"));
+            Assert.That(text.Id, Is.EqualTo("ChwKGkNLREw3djZoblBJQ0ZSZ1ByUVlkX25VRklR"));
+            Assert.That(text.TimestampUsec, Is.EqualTo(1628248435329905));
+            Assert.That(text.MessageItems, Is.EqualTo(new List<IMessagePart> { new TextPart("abcdefg") }));
         }
         [Test]
         public void ParseSuperchatNoMessageTest()
@@ -69,12 +63,12 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("UCg6fWFQ93ETVFUQ2PVXN6ag", text.AuthorExternalChannelId);
-            Assert.AreEqual("NT$15.00", text.PurchaseAmount);
-            Assert.AreEqual("斎藤ひろし", text.AuthorName);
-            Assert.AreEqual("ChwKGkNKZXZ2Y2VFaHZRQ0ZiNE1yUVlkOUpRQ1Vn", text.Id);
-            Assert.AreEqual(1636280729048459, text.TimestampUsec);
-            Assert.AreEqual(new List<IMessagePart>(), text.MessageItems);
+            Assert.That(text.AuthorExternalChannelId, Is.EqualTo("UCg6fWFQ93ETVFUQ2PVXN6ag"));
+            Assert.That(text.PurchaseAmount, Is.EqualTo("NT$15.00"));
+            Assert.That(text.AuthorName, Is.EqualTo("斎藤ひろし"));
+            Assert.That(text.Id, Is.EqualTo("ChwKGkNKZXZ2Y2VFaHZRQ0ZiNE1yUVlkOUpRQ1Vn"));
+            Assert.That(text.TimestampUsec, Is.EqualTo(1636280729048459));
+            Assert.That(text.MessageItems, Is.EqualTo(new List<IMessagePart>()));
         }
         [Test]
         public void ParseMonthlySpecialMembershipTest()
@@ -86,18 +80,18 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("UC-qpLhjn7jMv3ZtP9u_Q_wQ", member.AuthorExternalChannelId);
-            Assert.AreEqual("atama", member.AuthorName);
-            Assert.AreEqual("Ci8KLUNKUEI0Sktvb19NQ0ZUcnU0d2NkNmpzRUtBLUxveU1lc0lELTMyNjcyMzEzNw%3D%3D", member.Id);
-            Assert.AreEqual(1633615685384473, member.TimestampUsec);
-            Assert.AreEqual(new List<IMessagePart>
+            Assert.That(member.AuthorExternalChannelId, Is.EqualTo("UC-qpLhjn7jMv3ZtP9u_Q_wQ"));
+            Assert.That(member.AuthorName, Is.EqualTo("atama"));
+            Assert.That(member.Id, Is.EqualTo("Ci8KLUNKUEI0Sktvb19NQ0ZUcnU0d2NkNmpzRUtBLUxveU1lc0lELTMyNjcyMzEzNw%3D%3D"));
+            Assert.That(member.TimestampUsec, Is.EqualTo(1633615685384473));
+            Assert.That(member.HeaderPrimaryTextItems, Is.EqualTo(new List<IMessagePart>
             {
                 new TextPart("メンバー歴 "),
                 new TextPart("13"),
                 new TextPart(" か月"),
-            }, member.HeaderPrimaryTextItems);
-            Assert.AreEqual(new List<IMessagePart>(), member.HeaderSubTextItems);
-            Assert.AreEqual(new List<IMessagePart> { new TextPart("シオンちゃんおかえり！大好き！") }, member.MessageItems);
+            }));
+            Assert.That(member.HeaderSubTextItems, Is.EqualTo(new List<IMessagePart>()));
+            Assert.That(member.MessageItems, Is.EqualTo(new List<IMessagePart> { new TextPart("シオンちゃんおかえり！大好き！") }));
         }
         [Test]
         public void ParseNormalMembershipTest()
@@ -109,17 +103,17 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("UC1THu2OG8m7uS46YeBW8iiA", member.AuthorExternalChannelId);
-            Assert.AreEqual("ワイマイカりパファ", member.AuthorName);
-            Assert.AreEqual("ChwKGkNLN0Q4WTcyaHZRQ0ZhMFRyUVlkQmVNSEpn", member.Id);
-            Assert.AreEqual(1636311167306349, member.TimestampUsec);
-            Assert.AreEqual(new List<IMessagePart>(), member.HeaderPrimaryTextItems);
-            Assert.AreEqual(new List<IMessagePart>
+            Assert.That(member.AuthorExternalChannelId, Is.EqualTo("UC1THu2OG8m7uS46YeBW8iiA"));
+            Assert.That(member.AuthorName, Is.EqualTo("ワイマイカりパファ"));
+            Assert.That(member.Id, Is.EqualTo("ChwKGkNLN0Q4WTcyaHZRQ0ZhMFRyUVlkQmVNSEpn"));
+            Assert.That(member.TimestampUsec, Is.EqualTo(1636311167306349));
+            Assert.That(member.HeaderPrimaryTextItems, Is.EqualTo(new List<IMessagePart>()));
+            Assert.That(member.HeaderSubTextItems, Is.EqualTo(new List<IMessagePart>
             {
                 new TextPart("Member sheep"),
                 new TextPart(" へようこそ！"),
-            }, member.HeaderSubTextItems);
-            Assert.AreEqual(new List<IMessagePart>(), member.MessageItems);
+            }));
+            Assert.That(member.MessageItems, Is.EqualTo(new List<IMessagePart>()));
         }
 
         [Test]
@@ -132,21 +126,21 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("UC_mV25pZDNAyev6B4nGAfqQ", member.AuthorExternalChannelId);
-            Assert.AreEqual("Fong", member.AuthorName);
-            Assert.AreEqual("Ci8KLUNLQ0MxX0xBaF9RQ0ZTOEZoQW9kb0JFQTVBLUxveU1lc0lELTMyNzI5MTkzMQ%3D%3D", member.Id);
-            Assert.AreEqual(1636459655369057, member.TimestampUsec);
-            Assert.AreEqual(new List<IMessagePart>
+            Assert.That(member.AuthorExternalChannelId, Is.EqualTo("UC_mV25pZDNAyev6B4nGAfqQ"));
+            Assert.That(member.AuthorName, Is.EqualTo("Fong"));
+            Assert.That(member.Id, Is.EqualTo("Ci8KLUNLQ0MxX0xBaF9RQ0ZTOEZoQW9kb0JFQTVBLUxveU1lc0lELTMyNzI5MTkzMQ%3D%3D"));
+            Assert.That(member.TimestampUsec, Is.EqualTo(1636459655369057));
+            Assert.That(member.HeaderPrimaryTextItems, Is.EqualTo(new List<IMessagePart>
             {
                 new TextPart("メンバー歴 "),
                 new TextPart("3"),
                 new TextPart(" か月"),
-            }, member.HeaderPrimaryTextItems);
-            Assert.AreEqual(new List<IMessagePart>
+            }));
+            Assert.That(member.HeaderSubTextItems, Is.EqualTo(new List<IMessagePart>
             {
                 new TextPart("うどん"),
-            }, member.HeaderSubTextItems);
-            Assert.AreEqual(new List<IMessagePart> { new TextPart("8") }, member.MessageItems);
+            }));
+            Assert.That(member.MessageItems, Is.EqualTo(new List<IMessagePart> { new TextPart("8") }));
         }
         [Test]
         public void ParseRemoveBannerForLiveChatCommandTest()
@@ -180,13 +174,13 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("y h", autoMod.AutoModeratedItemAuthorName);
-            Assert.AreEqual(new List<IMessagePart>
+            Assert.That(autoMod.AutoModeratedItemAuthorName, Is.EqualTo("y h"));
+            Assert.That(autoMod.AutoModeratedItemMessage, Is.EqualTo(new List<IMessagePart>
             {
                 new TextPart("やっぱりこの人。。。馬鹿だ。"),
-            }, autoMod.AutoModeratedItemMessage);
-            Assert.AreEqual("CjoKGkNLcUM3c0hwamZRQkZmdNTFJnEhxDSTZPN3Vfb2pmUUNGUXMxandvZHViQUgtQS0z", autoMod.Id);
-            Assert.AreEqual("1636548302569808", autoMod.TimestampUsec);
+            }));
+            Assert.That(autoMod.Id, Is.EqualTo("CjoKGkNLcUM3c0hwamZRQkZmdNTFJnEhxDSTZPN3Vfb2pmUUNGUXMxandvZHViQUgtQS0z"));
+            Assert.That(autoMod.TimestampUsec, Is.EqualTo("1636548302569808"));
         }
         [Test]
         public void ParseLiveChatModerationMessageTest()
@@ -253,14 +247,15 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("name", gift.AuthorName);
-            Assert.AreEqual("id", gift.Id);
-            Assert.AreEqual(1658042000674397, gift.TimestampUsec);
-            Assert.AreEqual(new List<IMessagePart> {
+            Assert.That(gift.AuthorName, Is.EqualTo("name"));
+            Assert.That(gift.Id, Is.EqualTo("id"));
+            Assert.That(gift.TimestampUsec, Is.EqualTo(1658042000674397));
+            Assert.That(gift.MessageItems, Is.EqualTo(new List<IMessagePart>
+            {
                 new TextPart("さんに "),
                 new TextPart("zaltower（ざるたわー）"),
                 new TextPart(" さんからメンバーシップ ギフトが贈られました"),
-            }, gift.MessageItems);
+            }));
         }
         [Test]
         public void ParsePlaceHolderMessageTest()
@@ -272,9 +267,9 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("id", text.Id);
-            Assert.AreEqual(1659951544115903, text.TimestampUsec);
-            Assert.AreEqual("clientid", text.ClientId);
+            Assert.That(text.Id, Is.EqualTo("id"));
+            Assert.That(text.TimestampUsec, Is.EqualTo(1659951544115903));
+            Assert.That(text.ClientId, Is.EqualTo("clientid"));
         }
         [Test]
         public void ParsePaidStickerTest()
@@ -286,13 +281,13 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("ChwKGkNLWHY3cnJnZ1AwQ0ZlMFFyUVlkVEJNUHJB", paidSticker.Id);
-            Assert.AreEqual(1675681627308582, paidSticker.TimestampUsec);
-            Assert.AreEqual("￥500", paidSticker.PurchaseAmount);
-            Assert.AreEqual("https://lh3.googleusercontent.com/qUL5j6d0fw7vRxVjNGWspPBtE_m71Nkbe9baHIMiMrQzlueLBYw_ReleYcWamTb0hsgkQiIbYkoC3IshxfU=s88-rg", paidSticker.StickerThumbnailUrl);
-            Assert.AreEqual(88, paidSticker.StickerThumbnailWidth);
-            Assert.AreEqual(88, paidSticker.StickerThumbnailHeight);
-            Assert.AreEqual("拍手をしている柴犬", paidSticker.StickerTooltip);
+            Assert.That(paidSticker.Id, Is.EqualTo("ChwKGkNLWHY3cnJnZ1AwQ0ZlMFFyUVlkVEJNUHJB"));
+            Assert.That(paidSticker.TimestampUsec, Is.EqualTo(1675681627308582));
+            Assert.That(paidSticker.PurchaseAmount, Is.EqualTo("￥500"));
+            Assert.That(paidSticker.StickerThumbnailUrl, Is.EqualTo("https://lh3.googleusercontent.com/qUL5j6d0fw7vRxVjNGWspPBtE_m71Nkbe9baHIMiMrQzlueLBYw_ReleYcWamTb0hsgkQiIbYkoC3IshxfU=s88-rg"));
+            Assert.That(paidSticker.StickerThumbnailWidth, Is.EqualTo(88));
+            Assert.That(paidSticker.StickerThumbnailHeight, Is.EqualTo(88));
+            Assert.That(paidSticker.StickerTooltip, Is.EqualTo("拍手をしている柴犬"));
         }
         [Test]
         public void ParseSponsorshipsGiftPurchaseAnnouncementTest2()
@@ -304,17 +299,17 @@ namespace YouTubeLiveSitePluginTests
                 Assert.Fail();
                 return;
             }
-            Assert.AreEqual("ChwKGkNNLTFpZTdQZ1AwQ0ZlMFFyUVlkVEJNUHJB", text.Id);
-            Assert.AreEqual(1675677171112706, text.TimestampUsec);
-            Assert.AreEqual("UCJDkaeOdy2GM7VawOYJmFzw", text.ChannelId);
-            Assert.AreEqual(new List<IMessagePart>
+            Assert.That(text.Id, Is.EqualTo("ChwKGkNNLTFpZTdQZ1AwQ0ZlMFFyUVlkVEJNUHJB"));
+            Assert.That(text.TimestampUsec, Is.EqualTo(1675677171112706));
+            Assert.That(text.ChannelId, Is.EqualTo("UCJDkaeOdy2GM7VawOYJmFzw"));
+            Assert.That(text.HeaderPrimaryText, Is.EqualTo(new List<IMessagePart>
             {
                 new TextPart("5"),
                 new TextPart(" 件の "),
                 new TextPart("XYZ"),
                 new TextPart(" のメンバーシップ ギフトを贈りました"),
-            }, text.HeaderPrimaryText);
-            Assert.AreEqual("https://www.gstatic.com/youtube/img/sponsorships/sponsorships_gift_purchase_announcement_artwork.png", text.Image.Url);
+            }));
+            Assert.That(text.Image.Url, Is.EqualTo("https://www.gstatic.com/youtube/img/sponsorships/sponsorships_gift_purchase_announcement_artwork.png"));
         }
     }
 }
